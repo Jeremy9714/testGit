@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author Chenyang
+ *
+ */
 public class HelloJava {
 	
 	private static int a = 5;
