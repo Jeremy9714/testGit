@@ -15,6 +15,17 @@ public class Regular {
 			System.out.println("today is: " + str);
 			String calender = String.format("%tT", date);
 			System.out.println(calender);
+			String time = String.format("%tc", date);
+			System.out.println(time);
+			String form = String.format("%tF", date);
+			System.out.println(form);
+		}
+
+		{
+			String str3 = String.format("%d", 200/2);
+			String str4 = String.format("%b", 3>5);
+			String str5 = String.format("%x", 400);
+			System.out.println(str3 + "\t" + str4 + "\t" + str5);
 		}
 	}
 
