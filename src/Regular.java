@@ -26,6 +26,8 @@ public class Regular {
 			String str4 = String.format("%b", 3>5);
 			String str5 = String.format("%x", 400);
 			System.out.println(str3 + "\t" + str4 + "\t" + str5);
+			String str6 = String.format("%b", 0);//java中不能用0和1作为布尔值
+			System.out.println(str6);
 		}
 	}
 
