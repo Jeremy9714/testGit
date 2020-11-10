@@ -34,6 +34,7 @@ public class Regular {
 		int[] intArray = new int[5];
 		int ss = 0;
 		intArray[ss++] = 6;
+		//System.out.println(intArray[-1]);
 		System.out.println(Arrays.toString(intArray));
 	}
 
