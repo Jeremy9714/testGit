@@ -11,6 +11,7 @@ public class Alphabet {
 		String str = "ver";
 		System.out.println(s.length()+"\t"+s.indexOf(str));        
 		System.out.println(s.lastIndexOf("i"));
+		System.out.println(s.lastIndexOf(""));	//lastIndexOf()方法参数为空字符串时，返回字符串长度
 	}
 
 }
