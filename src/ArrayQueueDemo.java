@@ -90,12 +90,13 @@ class ArrayQueue{
 	public void display() {
 		if(isEmpty()) {
 			System.out.println("队列为空");
-		}
-		for (int i:queue) {
-			if(i == -1) {
-				System.out.println("X ");
-			}else
-				System.out.println(i + " ");
+		}else {
+			for (int i:queue) {
+				if(i == -1) {
+					System.out.println("X ");
+				}else
+					System.out.println(i + " ");
+			}
 		}
 	}
 	
