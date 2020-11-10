@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Date;
 public class Regular {
 
@@ -28,7 +29,12 @@ public class Regular {
 			System.out.println(str3 + "\t" + str4 + "\t" + str5);
 			String str6 = String.format("%b", 0);//java中不能用0和1作为布尔值
 			System.out.println(str6);
+			System.out.println();
 		}
+		int[] intArray = new int[5];
+		int ss = 0;
+		intArray[ss++] = 6;
+		System.out.println(Arrays.toString(intArray));
 	}
 
 }
