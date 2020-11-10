@@ -80,7 +80,7 @@ class ArrayQueue{
 			System.out.println("队列已空");
 		}
 		if(front == queue.length) {
-			front = -1;
+			front = 0;
 		}
 		queue[front] = -1;
 		++front;
