@@ -1,9 +1,16 @@
-
+/**
+ * 字符串操作
+ * @author Chenyang
+ *
+ */
 public class Alphabet {
 
 	public static void main(String[] args) {
-		// TODO 自动生成的方法存根
-		
+		// indexOf & lastIndexOf 
+		String s = new String("university");
+		String str = "ver";
+		System.out.println(s.length()+"\t"+s.indexOf(str));        
+		System.out.println(s.lastIndexOf("i"));
 	}
 
 }
