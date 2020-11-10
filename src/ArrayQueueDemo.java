@@ -28,10 +28,10 @@ public class ArrayQueueDemo {
 				arr.display();
 				break;
 			case 'h':
-				System.out.println(arr.headQueue());
+				arr.headQueue();
 				break;
 			case 't':
-				System.out.println(arr.tailQueue());
+				arr.tailQueue();
 				break;
 			case 's':
 				System.out.println(arr.queueSize());
@@ -78,6 +78,7 @@ class ArrayQueue{
 	public void removeQueue() {
 		if(isEmpty()) {
 			System.out.println("队列已空");
+			return;
 		}
 		if(front == queue.length) {
 			front = 0;
@@ -100,20 +101,20 @@ class ArrayQueue{
 		}
 	}
 	
-	public int headQueue() {
+	public void headQueue() {
 		if (isEmpty()) {
 			System.out.println("队列为空");
-			return 0;
+			return;
 		}
-		return queue[front];
+		System.out.println(queue[front]);
 	}
 	
-	public int tailQueue() {
+	public void tailQueue() {
 		if (isEmpty()) {
 			System.out.println("队列为空");
-			return -1;
+			return;
 		}
-		return queue[rear];
+		System.out.println(queue[rear]);
 	}
 	
 	public int queueSize() {
