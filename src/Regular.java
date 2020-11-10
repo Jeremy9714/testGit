@@ -1,4 +1,4 @@
-
+import java.util.Date;
 public class Regular {
 
 	public static void main(String[] args) {
@@ -9,6 +9,13 @@ public class Regular {
 		
 		String[] secondArray = A.split("\\.", 2);
 		for (String a:secondArray) System.out.println(a);
+		{
+			Date date = new Date();
+			String str = String.format("%te", date);
+			System.out.println("today is: " + str);
+			String calender = String.format("%tT", date);
+			System.out.println(calender);
+		}
 	}
 
 }
