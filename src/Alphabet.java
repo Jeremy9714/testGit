@@ -12,6 +12,9 @@ public class Alphabet {
 		System.out.println(s.length()+"\t"+s.indexOf(str));        
 		System.out.println(s.lastIndexOf("i"));
 		System.out.println(s.lastIndexOf(""));	//lastIndexOf()方法参数为空字符串时，返回字符串长度
+		System.out.println(s.charAt(2));
+		String newstring = s.replace("i", "ii");
+		System.out.println(newstring);
 	}
 
 }
