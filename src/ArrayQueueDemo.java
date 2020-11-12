@@ -66,7 +66,9 @@ class ArrayQueue{
 			throw new IndexOutOfBoundsException("队列已满");
 		}
 		if(isEmpty()) {
-			front = 0;
+			if (rear >-1) {
+				front = rear;
+			}else front = 0;
 		}
 		if(rear == queue.length -1) {
 			rear =-1;
@@ -80,12 +82,14 @@ class ArrayQueue{
 			System.out.println("队列已空");
 			return;
 		}
-		if(front == queue.length) {
-			front = 0;
-		}
 		queue[front] = -1;
 		++front;
 		--ele;
+		if(front == queue.length){
+			if(rear >-1) {
+				front = 0;
+			}else front =-1;
+		}
 	}
 	
 	public void display() {
@@ -98,6 +102,8 @@ class ArrayQueue{
 				}else
 					System.out.println(i + " ");
 			}
+			System.out.println();
+			System.out.println("front: " + front + "\t" + " rear: " + rear);
 		}
 	}
 	
