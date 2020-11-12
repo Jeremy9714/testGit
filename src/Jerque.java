@@ -20,6 +20,16 @@ public class Jerque {
 		time = endTime - starTime;
 		System.out.println("消耗时间"+time);
 		//System.out.println(builder.toString());
+		
+		//insert(int offset, arg)方法
+		StringBuilder bf = new StringBuilder("hello");
+		bf.insert(5, "world");
+		System.out.println(bf.toString());
+		
+		//delete(int start, int end)方法
+		StringBuilder sb = new StringBuilder("StringBuilder");
+		sb.delete(0, 6);
+		System.out.println(sb.toString());
 	}
 
 }
