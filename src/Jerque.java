@@ -1,4 +1,4 @@
-
+import java.util.regex.*;
 public class Jerque {
 
 	public static void main(String[] args) {
@@ -30,6 +30,29 @@ public class Jerque {
 		StringBuilder sb = new StringBuilder("StringBuilder");
 		sb.delete(0, 6);
 		System.out.println(sb.toString());
+		{
+			//课后练习
+			String t1 = "hello";
+			System.out.println(t1.toUpperCase());
+			String t2 = "HELLO";
+			System.out.println(t2.toLowerCase());
+			String t3 = new String("helloworld");
+			String t4 = t3.substring(0,5);
+			if(t1.equals(t4))
+				System.out.println("两个子串相同");
+			else
+				System.out.println("两个子串不相同");
+			
+			String regx = "\\d{11}";
+			String t5 = "13075312889";
+			if(t5.matches(regx))
+				System.out.println("合法的手机号");
+			
+			StringBuilder generator = new StringBuilder("");
+			for(int i = 0; i<11;++i)
+				generator.append(i);
+			System.out.println(generator.toString());
+		}
 	}
 
 }
