@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.regex.*;
 import java.util.Date;
 public class Regular {
 
@@ -36,6 +37,21 @@ public class Regular {
 		intArray[ss++] = 6;
 		//System.out.println(intArray[-1]);
 		System.out.println(Arrays.toString(intArray));
+		{
+			String reg = "\\w+@\\w+(\\.\\w{2,3})*\\.\\w{2,3}";
+			String e1 = "chenyang@brunel.ac.uk";
+			String e2 = "1822550890@qq.com";
+			String e3 = "czy@sina...com";
+			if(e1.matches(reg)) {
+				System.out.println("e1合法");
+			}
+			if(e2.matches(reg)) {
+				System.out.println("e2合法");
+			}
+			if(!e3.matches(reg)) {
+				System.out.println("e3不合法");
+			}
+		}
 	}
 
 }
