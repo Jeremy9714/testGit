@@ -29,6 +29,16 @@ public class PackageClass {
 		int minint = Integer.MIN_VALUE; //int类型的最小值
 		int sizeint = Integer.SIZE; //int值的位数
 		System.out.println(maxint +"\t"+minint+"\t"+sizeint);
+		
+		//Boolean类
+		Boolean b1 = new Boolean("true");
+		System.out.println(b1.booleanValue());
+		
+		//Character类
+		Character mychar1 = new Character('A');
+		Character mychar2 = new Character('a');
+		System.out.println(mychar1+"是大写字母吗？ "+Character.isUpperCase(mychar1));
+		System.out.println(mychar2+"是小写字母吗？ "+Character.isLowerCase(mychar2));
 	}
 
 }
