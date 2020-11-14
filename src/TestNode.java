@@ -201,6 +201,10 @@ class LinkedNodeDemo{
 	
 	//删除节点
 	public void	 delete(int no) {
+		if(head.next==null) {
+			System.out.println("链表为空，无法删除");
+		}
+		
 		LinkedNode temp = head;
 		boolean flags = false;
 		while(true) {
