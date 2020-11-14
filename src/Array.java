@@ -27,7 +27,7 @@ public class Array {
 				int j=0;
 				for(int y:x) {
 					++j;
-					if(i==arr2.length&&y==x.length) {
+					if(i==arr2.length&&j==x.length) {
 						System.out.println(y);
 					}else {
 						System.out.println(y + " ");
