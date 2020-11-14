@@ -42,6 +42,7 @@ public class ArrayQueueDemo {
 			default:
 				break;
 			}
+			input.close();
 			System.out.println();
 		}while(!loop);
 	}
