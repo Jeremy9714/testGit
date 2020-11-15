@@ -3,7 +3,7 @@ public class CalculatorStack {
 
 	public static void main(String[] args) {
 		// TODO 自动生成的方法存根
-		String str = "9-3*2-1-2";
+		String str = "9-3*4/2+2*5/2-1";
 		int result = calculator(10,10,str);
 		System.out.printf("表达式%s的值为%d\n",str,result);
 	}
@@ -32,7 +32,7 @@ public class CalculatorStack {
 				//判断运算符栈是否为空
 				if(!opStack.isEmpty()) {
 					//比较运算符和栈中最顶端运算符的优先级
-					if(opStack.priority(ch)<opStack.priority(opStack.peak())) {
+					if(opStack.priority(ch)<=opStack.priority(opStack.peak())) {
 						num1 = numStack.pop();
 						num2 = numStack.pop();
 						oper = opStack.pop();
@@ -42,9 +42,17 @@ public class CalculatorStack {
 					//opStack.push(ch);
 				}
 				opStack.push(ch);//运算符入栈
-			}else {//若字符为数字，直接入栈
-				numStack.push(ch-'0');
-				//System.out.println("so far so good");
+			}else{
+				//若字符为数字，直接入栈
+				if(!opStack.isEmpty()&&opStack.peak()=='-')
+				{
+					opStack.pop();
+					opStack.push('+');
+					numStack.push(-(ch-'0'));
+				}else {
+					numStack.push(ch-'0');
+					//System.out.println("so far so good");
+				}
 			}
 		}
 		
