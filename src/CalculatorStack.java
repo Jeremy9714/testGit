@@ -3,7 +3,7 @@ public class CalculatorStack {
 
 	public static void main(String[] args) {
 		// TODO 自动生成的方法存根
-		String str = "7+3*2+6-9/3+2";
+		String str = "9-3*2-1-2";
 		int result = calculator(10,10,str);
 		System.out.printf("表达式%s的值为%d\n",str,result);
 	}
@@ -38,13 +38,6 @@ public class CalculatorStack {
 						oper = opStack.pop();
 						res = numStack.cal(num1, num2, oper);
 						numStack.push(res);//结果入栈
-						if(opStack.priority(ch)<opStack.priority(opStack.peak())) {
-							num1 = numStack.pop();
-							num2 = numStack.pop();
-							oper = opStack.pop();
-							res = numStack.cal(num1, num2, oper);
-							numStack.push(res);
-						}
 					}
 					//opStack.push(ch);
 				}
