@@ -3,8 +3,8 @@ public class CalculatorStack {
 
 	public static void main(String[] args) {
 		// TODO 自动生成的方法存根
-		String str = "9-3*4/2+2*5/2-1";
-		int result = calculator(10,10,str);
+		String str = "12-11*4/11-13*10";
+		int result = calculator(20,20,str);
 		System.out.printf("表达式%s的值为%d\n",str,result);
 	}
 	
@@ -44,13 +44,28 @@ public class CalculatorStack {
 				opStack.push(ch);//运算符入栈
 			}else{
 				//若字符为数字，直接入栈
+				String strNum=String.valueOf(ch);
+				//判断下一个字符是否为数字,且不为字符串末尾
+				if(index!=expression.length()&&!opStack.isOper(expression.substring(index,index+1).charAt(0))) {
+					//String strNum=String.valueOf(ch);
+					//遍历到下一个字符不为数字为止，且不为字符串末尾
+					//将遍历到的数字添加到字符串末尾
+					while(index!=expression.length()&&!opStack.isOper(expression.substring(index,index+1).charAt(0))) {
+						strNum+=expression.substring(index,index+1);
+						index++;
+					}
+				}
+				//System.out.println(Integer.parseInt(strNum));
+				//判断上一个添加的操作符是否为'-'
 				if(!opStack.isEmpty()&&opStack.peak()=='-')
 				{
+					//移除'-'并入栈'+'
+					//将数字去相反数入栈
 					opStack.pop();
 					opStack.push('+');
-					numStack.push(-(ch-'0'));
+					numStack.push(-Integer.parseInt(strNum));
 				}else {
-					numStack.push(ch-'0');
+					numStack.push(Integer.parseInt(strNum));
 					//System.out.println("so far so good");
 				}
 			}
