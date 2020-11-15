@@ -4,9 +4,12 @@ public class Josephu {
 	public static void main(String[] args) {
 		
 		CircleSimpleLinkedList circleSimpleLinkedList = new CircleSimpleLinkedList();
-		circleSimpleLinkedList.addBoy(15);
-		circleSimpleLinkedList.showList();
-
+		circleSimpleLinkedList.addBoy(100);
+		//circleSimpleLinkedList.showList();
+		
+		//约瑟夫问题
+		circleSimpleLinkedList.countBoy(10, 7, 100);
+		
 	}
 
 }
@@ -39,6 +42,46 @@ class CircleSimpleLinkedList{
 				curBoy = newBoy;
 			}
 		}
+	}
+	
+	/**
+	 * @param startBoy 表示从第几个小孩开始报数
+	 * @param count 表示报数的个数
+	 * @param boyNum 表示小孩的个数
+	 */
+	public void countBoy(int startBoy, int count, int boyNum) {
+		if(first==null||startBoy<1||startBoy>boyNum) {
+			System.out.println("无效的参数");
+			return;
+		}
+		Boy helper = first;
+		//helper指向first的前一个节点
+		while(true) {
+			if(helper.getNext()==first)
+				break;
+			helper = helper.getNext();
+		}
+		//第一次报数前先将两个指针向后移动报数编号-1个位置
+		for(int i=0;i<startBoy-1;++i) {
+			helper = helper.getNext();
+			first = first.getNext();
+		}
+		
+		while(true) {
+			if(helper==first) {
+				break;
+			}
+			//报数时将连个指针向后移动报数个数-1个位置
+			for(int i=0;i<count-1;++i) {
+				helper = helper.getNext();
+				first = first.getNext();
+			}
+			System.out.printf("出圈的小孩编号为%d \n",first.getNo());
+			//将first指向的节点移除
+			first = first.getNext();
+			helper.setNext(first);
+		}
+		System.out.printf("最后出圈的小孩编号为%d \n",first.getNo());
 	}
 	
 	//遍历节点
