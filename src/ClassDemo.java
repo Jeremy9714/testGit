@@ -1,52 +1,36 @@
 
-public class ClassDemo extends SubParentClass{
-	
-	ClassDemo(){
-		System.out.println("调用子类ClassDemo的构造方法");
-	}
-	//重载
-	public static int sum(int a) {
-		System.out.println("方法1\t"+a);
-		return a;
-	}
-	public static double sum(double a) {
-		System.out.println("方法2\t"+a);
-		return a;
-	}
-	public static int sum(int...a) {
-		System.out.println("方法3\t"+a[0]);
-		return a[0];
-	}
+public class ClassDemo{
+
 	public static void main(String[] args) {
 		// TODO 自动生成的方法存根
-		ClassDemo c = new ClassDemo();
-		System.out.println(c.getClass().getName());
-		ParentClass p = c; //子类可以给父类赋值
-		//ParentClass p2 = new ParentClass();
-		System.out.println(p);
-		//判断实例p是否为SubParentClass类的实例
-		if(p instanceof SubParentClass) {
-			System.out.println("successed");
-			//强制类型转换
-			SubParentClass s = (SubParentClass) p;
-			System.out.println(s);
-		}
-		sum(10);
-		sum(10.0);
-		sum(1,2,3,4,5);
-	}
+		A a = new B();
+		//多态
+		a.print();
+		a.testAbstract();
 
-}
-class ParentClass{
-	ParentClass(){
-		System.out.println("调用Parent类的构造方法");
-	}
-	public String toString() {
-		return this.getClass().getName();
 	}
 }
-class SubParentClass extends ParentClass{
-	SubParentClass(){
-		System.out.println("调用子类SubParent类的构造方法");
+interface functions{//接口
+	public void interfaceTest();//接口内的方法，省略abstract关键字
+	int temp=0;//接口内定义的任何字段都是static和final的
+}
+abstract class A{//抽象类
+	abstract void print();
+	abstract void testAbstract();
+}
+class B extends A{
+	protected void print() {
+		System.out.println("B的输出");
+	}
+	protected void testAbstract() {
+		System.out.println("B的抽象方法");
+	}
+}
+class C extends B{
+	public void print() {
+		System.out.println("C的输出");
+	}
+	protected void testAbstract() {
+		System.out.println("C的抽象方法");
 	}
 }
