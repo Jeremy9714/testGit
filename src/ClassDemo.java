@@ -1,4 +1,4 @@
-
+import static pri.test.PackageTest.showRandom;//导入静态成员
 public class ClassDemo{
 
 	public static void main(String[] args) {
@@ -16,6 +16,7 @@ public class ClassDemo{
 		for(int i=0;i<f.length;++i) {
 			f[i].interfaceTest();
 		}
+		showRandom();
 	}
 }
 interface functions{//接口
