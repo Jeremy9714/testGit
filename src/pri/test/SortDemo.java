@@ -42,9 +42,11 @@ public class SortDemo {
 	
 	public static void InsertSort(int[] array) {
 		System.out.println("原数组: " + Arrays.toString(array));
+		int insertIndex;
+		int insertVal;
 		for(int i=1;i<array.length;++i) {
-			int insertIndex=i;
-			int insertVal=array[i];
+			insertIndex=i;
+			insertVal=array[i];
 			for(int j=i-1;j>=0;--j) {
 				if(array[j]>insertVal) {
 					array[insertIndex--]=array[j];
@@ -67,9 +69,11 @@ public class SortDemo {
 	
 	public static void SeclectSort(int[] array) {
 		System.out.println("原数组: " + Arrays.toString(array));
+		int minIndex;
+		int min;
 		for(int i=0;i<array.length-1;++i) {
-			int minIndex=i;
-			int min=array[i];
+			minIndex=i;
+			min=array[i];
 			for(int j=i+1;j<array.length;++j) {
 				if(min>array[j]) {
 					min = array[j];
