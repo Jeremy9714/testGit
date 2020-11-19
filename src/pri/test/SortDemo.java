@@ -5,18 +5,13 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class SortDemo {
-
+	static int quickCount = 0;
 	public static void main(String[] args) {
-
-		int[] array = {2,3,4,5,1};
-		int[] array2 = {2,3,4,5,1};
-		int[] array3 = {5,4,3,2,1};
-		int[] array4 = {8,9,1,7,2,3,5,4,6,0};
-		int[] array5 = {8,9,1,7,2,3,5,4,6,0};
+		int[] array = {8,4,5,7,1,3,6,2};
 		
-		/*int[] array = new int[80000];
+		/*int[] array = new int[8000000];
 		for(int i=0;i<array.length;++i) {
-			array[i]=(int) (Math.random()*80000);
+			array[i]=(int) (Math.random()*8000000);
 		}*/
 		/*Date date = new Date();
 		SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
@@ -27,6 +22,7 @@ public class SortDemo {
 		//SeclectSort(array);
 		//InsertSort(array);
 		//ShellExchangeSort(array);
+		QuickSort(array,0,array.length-1);
 		long endTime = System.currentTimeMillis();
 		System.out.println(endTime-startTime);*/
 		
@@ -34,18 +30,94 @@ public class SortDemo {
 		String endTime = simple.format(date2);
 		System.out.println(endTime);*/
 		
-		BubbleSort(array);
-		System.out.println();
-		SeclectSort(array2);
-		System.out.println();
-		InsertSort(array3);
-		System.out.println();
-		ShellExchangeSort(array4);
-		System.out.println();
-		ShellMoveSort(array5);
+		/*QuickSort(array,0,array.length-1);
+		System.out.println(Arrays.toString(array));
+		System.out.println();*/
+		
+		int[] temp = new int[array.length];
+		MergeSort(array,0,array.length-1,temp);
+		System.out.println(Arrays.toString(array));
 		
 	}
 	
+	//归并分割数组
+	public static void MergeSort(int[] array, int left, int right, int[] temp) {
+		if(left<right) {
+			//System.out.println(Arrays.toString(array));
+			int mid = (left+right)/2;
+			MergeSort(array,left,mid,temp);
+			MergeSort(array,mid+1,right,temp);		
+			Merge(array,left,mid,right,temp);
+			//System.out.println(Arrays.toString(array));
+		}
+	}
+	
+	//归并排序
+	public static void Merge(int[] array, int left, int mid, int right, int[] temp) {
+		int i = left;
+		int j = mid+1;
+		int t = 0;//输出数组的索引
+		//任意一个数组都没有输出完的情况
+		while(i<=mid && j<=right) {
+			temp[t++] = array[j]>array[i]?array[i++]:array[j++];
+		}
+		
+		//将剩余的数组中的元素添加至temp数组
+		while(i<=mid) {
+			temp[t++] = array[i++];
+		}
+		while(j<=right) {
+			temp[t++] = array[j++];
+		}
+		
+		//将temp数组的元素复制到array数组中
+		int tempLeft = left;
+		t = 0;
+		//System.out.println("left: " + tempLeft +" right: " + right);
+		while(tempLeft<=right) {
+			array[tempLeft++] = temp[t++];
+		}
+		
+	}
+	
+	//快速排序
+	public static void QuickSort(int[] array, int left, int right) {
+		int l = left;
+		int r = right;
+		int pivot = array[left];
+		int temp;
+		if(left>right) {
+			//System.out.println("最终结果为: " + Arrays.toString(array));
+			return;
+		}
+		while(l!=r) {
+			while(array[r]>=pivot && l<r) {
+				--r;
+			}
+			while(array[l]<=pivot && l<r) {
+				++l;
+			}
+			if(l<r) {
+				temp = array[l];
+				array[l] = array[r];
+				array[r] = temp;
+			}
+		}
+		//当左右指针相重合时退出循环，并交换基准值位置和指针指向位置的值		
+		array[left] = array[l];
+		array[l] = pivot;	
+		//System.out.println(left +" "+right + " " + pivot);
+		//System.out.println("第" + (++quickCount) + "次快速排序结果为: " + Arrays.toString(array));
+		
+		if(left<r) {
+			QuickSort(array, left,l-1);
+		}
+		if(right>l) {
+			QuickSort(array, r+1,right);
+		}
+	}
+	
+	//希尔排序(移动法)
 	public static void ShellMoveSort(int[] array) {
 		System.out.println("原数组: " + Arrays.toString(array));
 		int count=0;
@@ -66,6 +138,7 @@ public class SortDemo {
 		System.out.println("最终结果为: " + Arrays.toString(array));
 	}
 	
+	//希尔排序(交换法)
 	public static void ShellExchangeSort(int[] array) { 
 		System.out.println("原数组: " + Arrays.toString(array));
 		int temp;
@@ -88,6 +161,7 @@ public class SortDemo {
 		System.out.println("最终结果为: " + Arrays.toString(array));
 	}
 	
+	//插入排序
 	public static void InsertSort(int[] array) {
 		System.out.println("原数组: " + Arrays.toString(array));
 		int insertIndex;
@@ -114,6 +188,8 @@ public class SortDemo {
 		System.out.println("最终结果为: " + Arrays.toString(array));
 	}
 	
+	//选择排序
+	
 	
 	public static void SeclectSort(int[] array) {
 		System.out.println("原数组: " + Arrays.toString(array));
@@ -137,6 +213,8 @@ public class SortDemo {
 		}
 		System.out.println("最终结果为: " + Arrays.toString(array));
 	}
+	
+	//冒泡排序
 	
 	
 	public static void BubbleSort(int[] array) {
