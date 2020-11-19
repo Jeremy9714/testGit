@@ -11,6 +11,8 @@ public class SortDemo {
 		int[] array = {2,3,4,5,1};
 		int[] array2 = {2,3,4,5,1};
 		int[] array3 = {5,4,3,2,1};
+		int[] array4 = {8,9,1,7,2,3,5,4,6,0};
+		int[] array5 = {8,9,1,7,2,3,5,4,6,0};
 		
 		/*int[] array = new int[80000];
 		for(int i=0;i<array.length;++i) {
@@ -23,8 +25,8 @@ public class SortDemo {
 		
 		/*long startTime = System.currentTimeMillis();
 		//SeclectSort(array);
-		InsertSort(array);
-		
+		//InsertSort(array);
+		//ShellExchangeSort(array);
 		long endTime = System.currentTimeMillis();
 		System.out.println(endTime-startTime);*/
 		
@@ -37,7 +39,53 @@ public class SortDemo {
 		SeclectSort(array2);
 		System.out.println();
 		InsertSort(array3);
+		System.out.println();
+		ShellExchangeSort(array4);
+		System.out.println();
+		ShellMoveSort(array5);
 		
+	}
+	
+	public static void ShellMoveSort(int[] array) {
+		System.out.println("原数组: " + Arrays.toString(array));
+		int count=0;
+		for(int gap = array.length/2;gap>0;gap/=2) {
+			for(int i = gap;i<array.length;++i) {
+				int j = i;
+				int temp = array[j];
+				if(array[j]<array[j-gap]) {
+					while(j-gap>=0 && array[j-gap]>temp) {
+						array[j] = array[j-gap];
+						j-=gap;
+					}
+					array[j] = temp;
+				}
+			}
+			System.out.println("第" + (++count) + "次希尔排序结果为: " + Arrays.toString(array));
+		}
+		System.out.println("最终结果为: " + Arrays.toString(array));
+	}
+	
+	public static void ShellExchangeSort(int[] array) { 
+		System.out.println("原数组: " + Arrays.toString(array));
+		int temp;
+		int count = 0;
+		for(int gap = array.length/2;gap>0;gap/=2) {
+			//间隔
+			for(int i = gap;i<array.length;++i) {
+				//遍历各组中所有的元素
+				for(int j = i-gap;j>=0;j-=gap) {
+					//如果当前元素大于加上步长后的元素，两个元素互换
+					if(array[j]>array[j+gap]) {
+						temp = array[j];
+						array[j] = array[j+gap];
+						array[j+gap] = temp;
+					}
+				}
+			}
+			System.out.println("第" + (++count) + "次希尔排序结果为: " + Arrays.toString(array));
+		}
+		System.out.println("最终结果为: " + Arrays.toString(array));
 	}
 	
 	public static void InsertSort(int[] array) {
