@@ -7,9 +7,9 @@ import java.util.Date;
 public class SortDemo {
 	static int quickCount = 0;
 	public static void main(String[] args) {
-		int[] array = {8,4,5,7,1,3,6,2};
+		int[] array = {56,740,13,9,28,193};
 		
-		/*int[] array = new int[8000000];
+		/*nt[] array = new int[8000000];
 		for(int i=0;i<array.length;++i) {
 			array[i]=(int) (Math.random()*8000000);
 		}*/
@@ -22,7 +22,8 @@ public class SortDemo {
 		//SeclectSort(array);
 		//InsertSort(array);
 		//ShellExchangeSort(array);
-		QuickSort(array,0,array.length-1);
+		//QuickSort(array,0,array.length-1);
+		RadixSort(array);
 		long endTime = System.currentTimeMillis();
 		System.out.println(endTime-startTime);*/
 		
@@ -30,14 +31,60 @@ public class SortDemo {
 		String endTime = simple.format(date2);
 		System.out.println(endTime);*/
 		
-		/*QuickSort(array,0,array.length-1);
+		/*//QuickSort(array,0,array.length-1);
 		System.out.println(Arrays.toString(array));
-		System.out.println();*/
+		System.out.println();
 		
-		int[] temp = new int[array.length];
+		/*int[] temp = new int[array.length];
 		MergeSort(array,0,array.length-1,temp);
 		System.out.println(Arrays.toString(array));
+		System.out.println();*/
+		RadixSort(array);
 		
+	}
+	
+	//基数排序
+	public static void RadixSort(int[] array) {
+		final int LEN = array.length;
+		//定义一个二维数组表示10个桶，每个桶就是一个二维数组
+		//为了防止数据溢出，将每一个一维数组(桶)的长度定义为数组长度
+		int[][] buckets = new int[10][array.length];
+		//定义一个一维数组，用来记录每个桶中的元素数量
+		int[] bucketNum = new int[10];
+		
+		//获取数组中最大值的位数
+		int max=array[0];
+		for(int i=1;i<LEN;++i) {
+			if(array[i]>max) {
+				max = array[i];
+			}
+		}
+		int times = (max+"").length();
+		int index;
+		//按数组中最大元素的数位从低到高依次排序
+		for(int i=0, n=1 ;i<times;++i,n*=10) {
+			//遍历数组中的元素
+			for(int j=0;j<LEN;++j) {
+				//取出的元素当前位数值
+				int digitOfElement = (array[j]/n)%10;
+				//放入对应的一维数组中
+				buckets[digitOfElement][bucketNum[digitOfElement]] = array[j];
+				//对应数字的桶内元素数量加一
+				bucketNum[digitOfElement]++;
+			}
+			index=0;
+			//输将桶内元素按顺序输出回原数组
+			for(int k=0;k<bucketNum.length;++k) {
+				if(bucketNum[k]!=0) {
+					for(int h = 0; h<bucketNum[k];++h) {
+						array[index++] = buckets[k][h];
+					}
+				}
+				//输出完毕将桶内元素个数清零
+				bucketNum[k]=0;
+			}	
+			System.out.println("第" + (i+1) + "次希尔排序结果为: " + Arrays.toString(array));
+		}			
 	}
 	
 	//归并分割数组
