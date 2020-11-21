@@ -22,6 +22,8 @@ public class TreeDemo {
 		System.out.println();
 		binaryTree.postOrder();*/
 		binaryTree.postOrderSerach(7);
+		binaryTree.delNode(3);
+		binaryTree.preOrder();
 	}
 
 }
@@ -97,6 +99,20 @@ class BinaryTree{
 	public void postOrder() {
 		if(this.root!=null) {
 			this.root.postOrder();
+		}else {
+			System.out.println("树为空");
+		}
+	}
+	
+	//删除指定no的元素
+	public void delNode(int no) {
+		if(root!=null) {
+			if(root.getNo()==no) {
+				System.out.println("已删除节点 "+root);
+				root=null;
+			}else {
+				root.delNode(no);
+			}
 		}else {
 			System.out.println("树为空");
 		}
@@ -240,4 +256,25 @@ class Node{
 		System.out.println(this);
 	}
 	
+	//删除指定no的元素
+	public void delNode(int no) {
+		if(this.leftNode!=null && this.leftNode.no==no) {
+			System.out.println("已删除节点 "+this.leftNode);
+			this.leftNode=null;
+			return;
+		}
+		if(this.rightNode!=null && this.rightNode.no==no) {
+			System.out.println("已删除节点 "+this.rightNode);
+			this.rightNode=null;
+			return;
+		}
+		//向左子树递归删除
+		if(this.leftNode!=null) {
+			this.leftNode.delNode(no);
+		}
+		//向右子树递归删除
+		if(this.rightNode!=null) {
+			this.rightNode.delNode(no);
+		}
+	}
 }
