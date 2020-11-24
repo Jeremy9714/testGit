@@ -1,5 +1,11 @@
 package pri.huffmantree;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,23 +16,73 @@ import java.util.Map;
 public class HuffmanTreeCodingDemo {
 
 	public static void main(String[] args) {
-		String content = "i like like like java do you like a java";
+		//String content = "i like like like java do you like a java";
+		//zipUnzipDemo(content);
+		
+		/*String srcFile = "D://Desktop//test.png";
+		String dstFile = "D://Desktop//test.zip";
+		zipFile(srcFile,dstFile);*/
+		
+		/*String zipFile = "D://Desktop//test.zip";
+		String dstFile = "D://Desktop//unzip.png";
+		unZipFile(zipFile,dstFile);*/
+		
+	}
+	
+	//解压文件
+	private static void unZipFile(String zipFile, String dstFile) {
+		try {
+			InputStream is = new FileInputStream(zipFile);
+			ObjectInputStream ois = new ObjectInputStream(is);
+			byte[] huffmanBytes = (byte[]) ois.readObject();
+			Map<Byte,String> huffmanCodes = (Map<Byte,String>) ois.readObject();
+
+			byte[] bytes = decode(huffmanCodes,huffmanBytes);
+			OutputStream os = new FileOutputStream(dstFile);
+			os.write(bytes);
+			System.out.println("解压完毕");
+			os.close();
+			ois.close();
+			is.close();
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	//使用赫夫曼编码压缩文件
+	private static void zipFile(String srcFile, String dstFile) {
+		try {
+		InputStream is = new FileInputStream(srcFile);
+		byte[] b = new byte[is.available()];
+		//将读取的文件存储到字节数组中
+		is.read(b);
+
+		byte[] huffmanCodeBytes = huffmanZip(b);
+		OutputStream os = new FileOutputStream(dstFile);
+		ObjectOutputStream oos = new ObjectOutputStream(os);
+		oos.writeObject(huffmanCodeBytes);
+		oos.writeObject(huffmanCodes);
+		System.out.println("成功压缩");
+		oos.close();
+		os.close();
+		is.close();
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	
+	//字符串压缩解压方法
+	private static void zipUnzipDemo(String str) {
+		String content = str;
+		//获取字符串的字节数组
 		byte[] bytes = content.getBytes();
-		//System.out.println("原字符串长度为"+bytes.length);
-		
-		/*List<Node2> list = getNodes(bytes);
-		// System.out.println(list);
-		Node2 root = createHuffmanTree(list);
-		preOrder(root);
-		getCodes(root);
-		System.out.println(huffmanCodes);
-		byte[] res = zip(bytes, huffmanCodes);*/
-		
+		//压缩字节数组
 		byte[] huffmanCodeBytes = huffmanZip(bytes);
 		System.out.println("压缩后的字节数组为: " + Arrays.toString(huffmanCodeBytes) + " 长度为 " + huffmanCodeBytes.length);
+		//解码被压缩的字符数组
 		byte[] decodeBytes = decode(huffmanCodes,huffmanCodeBytes);
 		System.out.println("原字符串为: " + new String(decodeBytes));
-		
 	}
 	
 	/**
@@ -36,7 +92,7 @@ public class HuffmanTreeCodingDemo {
 	 * @return
 	 */
 	//解码
-	public static byte[] decode(Map<Byte,String> huffmanCodes, byte[] huffmanCodeBytes) {
+	private static byte[] decode(Map<Byte,String> huffmanCodes, byte[] huffmanCodeBytes) {
 		
 		//先将编码后字节数组中的字节依次转换为8位二进制整数，并存入字符串中
 		StringBuilder stringBuilder = new StringBuilder();
@@ -88,7 +144,7 @@ public class HuffmanTreeCodingDemo {
 		return unZipBytes;
 	}
 	
-	public static String byteToString(boolean flag, byte b) {
+	private static String byteToString(boolean flag, byte b) {
 		int temp = b;
 
 		if(flag) {//若为正数要补高位
@@ -106,7 +162,7 @@ public class HuffmanTreeCodingDemo {
 		}
 	}
 	
-	public static byte[] huffmanZip(byte[] bytes) {
+	private static byte[] huffmanZip(byte[] bytes) {
 		//将字符串中的字符和其频率作为参数生成对象并保存到List中
 		List<Node2> list = getNodes(bytes);
 		//用排好序的List来构建赫夫曼树
