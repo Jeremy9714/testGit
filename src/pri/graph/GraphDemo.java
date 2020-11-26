@@ -47,7 +47,7 @@ class Graph {
 
 	// 深度优先搜索
 	private void dfs(int index) {
-		System.out.print(getValueByIndex(index) + index + "->");
+		System.out.print(getValueByIndex(index) + (index + 1) + "->");
 		// 将此顶点标记为已访问
 		isVisited[index] = true;
 		// 获取当前顶点的第一个邻接顶点
@@ -80,7 +80,7 @@ class Graph {
 		int w; // 头节点的邻节点
 		// 队列,记录节点访问的顺序
 		LinkedList<Integer> queue = new LinkedList<Integer>();
-		System.out.print(vertexList.get(index) + index + "->");
+		System.out.print(vertexList.get(index) + (index + 1) + "->");
 		isVisited[index] = true;
 		queue.addLast(index);
 		// 队列为空，则结束搜索
@@ -92,7 +92,7 @@ class Graph {
 			// 还存在邻节点，则循环搜索
 			while (w != -1) {
 				if (!isVisited[w]) {
-					System.out.print(vertexList.get(w) + w + "->");
+					System.out.print(vertexList.get(w) + (w + 1) + "->");
 					isVisited[w] = true;
 					// 再将新的邻节点加入队列
 					queue.addLast(w);
