@@ -20,13 +20,12 @@ public class KruskalDemo {
 		KruskalDemo kruskal = new KruskalDemo(vertices, weight);
 		// kruskal.print();
 
-		/*Edge[] edges = kruskal.getEdges();
-		System.out.println("排序前的边");
-		System.out.println(Arrays.toString(edges));
-		Arrays.sort(edges);
-		System.out.println("排序后的边");
-		System.out.println(Arrays.toString(edges));*/
-		
+		/*
+		 * Edge[] edges = kruskal.getEdges(); System.out.println("排序前的边");
+		 * System.out.println(Arrays.toString(edges)); Arrays.sort(edges);
+		 * System.out.println("排序后的边"); System.out.println(Arrays.toString(edges));
+		 */
+
 		Edge[] res = kruskal.Kruskal();
 		System.out.println(Arrays.toString(res));
 
@@ -69,9 +68,9 @@ public class KruskalDemo {
 			// 获取两个顶点在最小生成树中的终点
 			int m = getEnd(ends, p1);
 			int n = getEnd(ends, p2);
-			//终点不相同
+			// 终点不相同
 			if (m != n) {
-				//将边的前一个顶点在已有的最小生成树中的重点设置为该边的后一个顶点
+				// 将边的前一个顶点在已有的最小生成树中的重点设置为该边的后一个顶点
 				ends[m] = n;
 				res[index++] = edges[i];
 			}
@@ -136,7 +135,7 @@ class Edge implements Comparable<Edge> {
 
 	@Override
 	public String toString() {
-		return "边<"+start+end+">权值为"+weight;
+		return "边<" + start + end + ">权值为" + weight;
 	}
 
 	@Override
