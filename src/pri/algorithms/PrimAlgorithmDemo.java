@@ -2,7 +2,7 @@ package pri.algorithms;
 
 import java.util.Arrays;
 
-public class primAlgorithmDemo {
+public class PrimAlgorithmDemo {
 
 	public static void main(String[] args) {
 
