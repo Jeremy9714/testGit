@@ -4,7 +4,7 @@ public class ThreadedBinaryTreeDemo {
 
 	public static void main(String[] args) {
 		// TODO 自动生成的方法存根
-		
+		Node root = new Node(1,"宋江");
 	}
 
 }
