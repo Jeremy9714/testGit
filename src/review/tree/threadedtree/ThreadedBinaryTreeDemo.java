@@ -4,7 +4,7 @@ public class ThreadedBinaryTreeDemo {
 
 	public static void main(String[] args) {
 		// TODO 自动生成的方法存根
-
+		
 	}
 
 }
@@ -12,39 +12,105 @@ public class ThreadedBinaryTreeDemo {
 class ThreadedTree {
 	private Node root;
 	private Node pre;
-	
+
 	public void setRoot(Node node) {
-		this.root=node;
+		this.root = node;
 	}
-	
-	public void preThreadedTree(Node node) {
-		
+
+	public void preThreadedTree() {
+		preThreadedTree(root);
+		pre = null;
+		System.out.println("前序线索化完毕");
 	}
+	private void preThreadedTree(Node node) {
+		if (node == null) {
+			System.out.println("该节点不存在");
+			return;
+		}
+		// 前驱节点
+		if (node.getLeft() == null) {
+			node.setLeft(pre);
+			node.setLeftType(1);
+		}
+		// 后继节点
+		if (pre != null && pre.getRight() == null) {
+			pre.setRight(node);
+			pre.setRightType(1);
+		}
+		// 更新前一个节点
+		pre = node;
+		// 左子树
+		if (node.getLeft() != null && node.getLeftType() == 0) {
+			preThreadedTree(node.getLeft());
+		}
+		// 右子树
+		if (node.getRight() != null && node.getRightType() == 0) {
+			preThreadedTree(node.getRight());
+		}
+	}
+
 	public void infixThreadedTree() {
 		infixThreadedTree(root);
 		pre = null;
 		System.out.println("中序线索化完毕");
 	}
 	private void infixThreadedTree(Node node) {
-		if(node==null) {
+		if (node == null) {
 			System.out.println("该节点不存在");
 			return;
 		}
-		if(node.getLeft()!=null&&node.getLeftType()==0) {
+		//左子树
+		if (node.getLeft() != null && node.getLeftType() == 0) {
 			infixThreadedTree(node.getLeft());
 		}
-		if(node.getLeft()==null) {
+		//前驱节点
+		if (node.getLeft() == null) {
 			node.setLeft(pre);
 			node.setLeftType(1);
 		}
-		if(pre!=null&&pre.getRight()==null) {
+		//后继节点
+		if (pre != null && pre.getRight() == null) {
 			pre.setRight(node);
 			pre.setRightType(1);
 		}
+		//更新前一个节点
 		pre = node;
-		if(node.getRight()!=null&&node.getRightType()==0) {
+		//右子树
+		if (node.getRight() != null && node.getRightType() == 0) {
 			infixThreadedTree(node.getRight());
 		}
+	}
+
+	public void postThreadedTree() {
+		postThreadedTree(root);
+		pre = null;
+		System.out.println("后序线索化完毕");
+	}
+	private void postThreadedTree(Node node) {
+		if (node == null) {
+			System.out.println("该节点不存在");
+			return;
+		}
+		//左子树
+		if (node.getLeft() != null && node.getLeftType() == 0) {
+			postThreadedTree(node.getLeft());
+		}
+		//右子树
+		if (node.getRight() != null && node.getRightType() == 0) {
+			postThreadedTree(node.getRight());
+		}
+		//前驱节点
+		if (node.getLeft() == null) {
+			node.setLeft(pre);
+			node.setLeftType(1);
+		}
+		//后继节点
+		if (pre != null && pre.getRight() == null) {
+			pre.setRight(node);
+			pre.setRightType(1);
+		}
+		//更新前一个节点
+		pre = node;
 	}
 }
 
