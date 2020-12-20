@@ -11,6 +11,7 @@ public class ThreadedBinaryTreeDemo {
 		Node node4 = new Node(4, "林冲");
 		Node node5 = new Node(5, "张飞");
 		Node node6 = new Node(6, "刘备");
+		Node node7 = new Node(7, "关羽");
 
 		tree.setRoot(node1);
 		node1.setLeft(node2);
@@ -18,11 +19,12 @@ public class ThreadedBinaryTreeDemo {
 		node2.setLeft(node4);
 		node2.setRight(node5);
 		node3.setLeft(node6);
-		//tree.del(4);
+		node3.setRight(node7);
+		// tree.del(4);
 
 		tree.infixThreadedTree();
 		tree.infixThreadedList();
-		
+
 		tree.preThreadedTree();
 		tree.preThreadedList();
 
@@ -37,29 +39,35 @@ class ThreadedTree {
 	public void setRoot(Node node) {
 		this.root = node;
 	}
-	
+
+	// 前序线索化遍历
 	public void preThreadedList() {
-		if(root==null) {
+		if (root == null) {
 			System.out.println("树为空");
 			return;
 		}
 		System.out.print("前序线索化遍历:   ");
 		Node node = root;
 		System.out.print(node.getNo() + "(" + node.getName() + ")->");
-		
-		while(node!=null) {
-			while(node.getLeft()!=null&&node.getLeftType()==0) {
-				node=node.getLeft();
+
+		while (node != null) {
+			while (node.getLeft() != null && node.getLeftType() == 0) {
+				node = node.getLeft();
 				System.out.print(node.getNo() + "(" + node.getName() + ")->");
 			}
-			while(node.getRight()!=null&&node.getRightType()==1) {
-				node=node.getRight();
+			while (node.getRight() != null && node.getRightType() == 1) {
+				node = node.getRight();
 				System.out.print(node.getNo() + "(" + node.getName() + ")->");
-			}	
+			}
+			// 无左子节点且无右线索时完成遍历
+			if (node.getLeftType() != 0 && node.getRightType() != 1) {
+				break;
+			}
 		}
 		System.out.println();
 	}
-	
+
+	// 中序线索化遍历
 	public void infixThreadedList() {
 		if (root == null) {
 			System.out.println("树为空");
@@ -81,6 +89,41 @@ class ThreadedTree {
 		System.out.println();
 	}
 
+	// 后序线索化遍历
+	/*public void postThreadedList() {
+		if (root == null) {
+			System.out.println("树为空");
+			return;
+		}
+		Node node = root;
+		Node parent = pre;
+		while (node != null) {
+			while (node.getLeft() != null && node.getLeftType() == 0) {			
+				node = node.getLeft();
+			}
+			while (node.getRight() != null && node.getRightType() == 0) {
+				node = node.getRight();
+			}
+			while (node.getRightType() == 3) {
+				System.out.print(node.getNo() + "(" + node.getName() + ")->");
+				pre = node;
+				node= node.getRight();
+			}
+			if(node==root) {
+				System.out.print(node.getNo() + "(" + node.getName() + ")->");
+				return;
+			}
+			while(node.getRight()==pre) {
+				System.out.print(node.getNo() + "(" + node.getName() + ")->");
+				pre = node;
+				//此处需要返回父节点
+			}
+			if(node.getRight()!=null&&node.getRightType()==0) {
+				node=node.getRight();
+			}
+		}
+	}*/
+
 	public void preThreadedTree() {
 		preThreadedTree(root);
 		pre = null;
@@ -95,12 +138,12 @@ class ThreadedTree {
 			return;
 		}
 		// 前驱节点
-		if (node.getLeft() == null) {
+		if (node.getLeft() == null || node.getLeftType() == 2 || node.getLeftType() == 3) {
 			node.setLeft(pre);
 			node.setLeftType(1);
 		}
 		// 后继节点
-		if (pre != null && pre.getRight() == null) {
+		if (pre != null && (pre.getRight() == null || pre.getRightType() == 2 || pre.getRightType() == 3)) {
 			pre.setRight(node);
 			pre.setRightType(1);
 		}
@@ -134,12 +177,12 @@ class ThreadedTree {
 			infixThreadedTree(node.getLeft());
 		}
 		// 前驱节点
-		if (node.getLeft() == null) {
+		if (node.getLeft() == null || node.getLeftType() == 1 || node.getLeftType() == 3) {
 			node.setLeft(pre);
 			node.setLeftType(2);
 		}
 		// 后继节点
-		if (pre != null && pre.getRight() == null) {
+		if (pre != null && (pre.getRight() == null || pre.getRightType() == 2 || pre.getRightType() == 3)) {
 			pre.setRight(node);
 			pre.setRightType(2);
 		}
@@ -173,12 +216,12 @@ class ThreadedTree {
 			postThreadedTree(node.getRight());
 		}
 		// 前驱节点
-		if (node.getLeft() == null) {
+		if (node.getLeft() == null || node.getLeftType() == 1 || node.getLeftType() == 2) {
 			node.setLeft(pre);
 			node.setLeftType(3);
 		}
 		// 后继节点
-		if (pre != null && pre.getRight() == null) {
+		if (pre != null && (pre.getRight() == null || pre.getRightType() == 1 || pre.getRightType() == 2)) {
 			pre.setRight(node);
 			pre.setRightType(3);
 		}
