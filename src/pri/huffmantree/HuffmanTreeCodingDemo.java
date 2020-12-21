@@ -16,9 +16,9 @@ import java.util.Map;
 public class HuffmanTreeCodingDemo {
 
 	public static void main(String[] args) {
+		
 		//String content = "i like like like java do you like a java";
 		//zipUnzipDemo(content);
-		
 		/*String srcFile = "D://Desktop//test.png";
 		String dstFile = "D://Desktop//test.zip";
 		zipFile(srcFile,dstFile);*/
@@ -26,7 +26,7 @@ public class HuffmanTreeCodingDemo {
 		/*String zipFile = "D://Desktop//test.zip";
 		String dstFile = "D://Desktop//unzip.png";
 		unZipFile(zipFile,dstFile);*/
-		
+
 	}
 	
 	//解压文件
