@@ -1,5 +1,11 @@
 package review.tree.huffmantree;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,14 +19,55 @@ public class HuffmanCodingDemo {
 		// TODO 自动生成的方法存根
 		String str = "i like like like java do you like a java";
 		System.out.println("原字符串为: " + str);
-		byte[] zipContent = encode(str);
+		byte[] bytes = str.getBytes();
+
+		byte[] zipContent = encode(bytes);
 		System.out.println("赫夫曼编码后的字节串为: " + Arrays.toString(zipContent));
 
 		// printMap(); //显示编码表
-		//System.out.println(zipContents.toString()); //显示赫夫曼编码后的二进制字符串
+		// System.out.println(zipContents.toString()); //显示赫夫曼编码后的二进制字符串
 
 		String originContent = decode(zipContent);
 		System.out.println("解码后的字符串为: " + originContent);
+	}
+
+	// 对文件进行赫夫曼编码
+	public static void zipFile(String srcFile, String destFile) {
+		try {
+			InputStream is = new FileInputStream(srcFile);
+			byte[] content = new byte[is.available()];
+			is.read(content);
+			byte[] huffmanBytes = encode(content);
+			OutputStream os = new FileOutputStream(destFile);
+			ObjectOutputStream oos = new ObjectOutputStream(os);
+			oos.writeObject(huffmanBytes);
+			oos.writeObject(encodedMap);
+			System.out.println("压缩完毕");
+			oos.close();
+			os.close();
+			is.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	// 对文件进行赫夫曼解码
+	public static void unZipFile(String srcFile, String destFile) {
+		try {
+			InputStream is = new FileInputStream(srcFile);
+			ObjectInputStream ois = new ObjectInputStream(is);
+			byte[] bytes = (byte[]) ois.readObject();
+			Map<Byte,String> map = (Map<Byte,String>) ois.readObject();
+			byte[] origin = getOrigin(bytes);
+			OutputStream os = new FileOutputStream(destFile);
+			os.write(origin);
+			System.out.println("解压完毕");
+			os.close();
+			ois.close();
+			is.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	// 整个还原字符串过程
@@ -47,15 +94,15 @@ public class HuffmanCodingDemo {
 			while (stringBuilder.length() + lastStr.length() != zipContents.length()) {
 				stringBuilder.append("0");
 			}
-		}else if(stringBuilder.length() + lastStr.length() > zipContents.length()) {
-			if(last>0) {
-				last|=256;
+		} else if (stringBuilder.length() + lastStr.length() > zipContents.length()) {
+			if (last > 0) {
+				last |= 256;
 			}
 			lastStr = Integer.toBinaryString(last);
-			lastStr = lastStr.substring(lastStr.length()-8);
+			lastStr = lastStr.substring(lastStr.length() - 8);
 		}
 		stringBuilder.append(lastStr);
-		//System.out.println(stringBuilder.toString());
+		// System.out.println(stringBuilder.toString());
 
 		Map<String, Byte> map = new HashMap<>();
 		for (Map.Entry<Byte, String> entry : encodedMap.entrySet()) {
@@ -100,8 +147,8 @@ public class HuffmanCodingDemo {
 	}
 
 	// 编码
-	public static byte[] encode(String arr) {
-		byte[] bytes = arr.getBytes();
+	public static byte[] encode(byte[] bytes) {
+		// byte[] bytes = arr.getBytes();
 		// System.out.println(Arrays.toString(bytes));
 		List<Data> list = getDatas(bytes);
 		Data root = createHuffmanTree(list);
