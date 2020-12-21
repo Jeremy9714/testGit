@@ -15,82 +15,98 @@ public class HuffmanCodingDemo {
 		System.out.println("原字符串为: " + str);
 		byte[] zipContent = encode(str);
 		System.out.println("赫夫曼编码后的字节串为: " + Arrays.toString(zipContent));
-		//System.out.println((byte)Integer.parseInt("1111110", 2));
+
+		// printMap(); //显示编码表
+		//System.out.println(zipContents.toString()); //显示赫夫曼编码后的二进制字符串
+
 		String originContent = decode(zipContent);
 		System.out.println("解码后的字符串为: " + originContent);
 	}
-	
-	//整个还原字符串过程
+
+	// 整个还原字符串过程
 	public static String decode(byte[] bytes) {
 		byte[] res = getOrigin(bytes);
-		//System.out.println(Arrays.toString(res));
+		// System.out.println(Arrays.toString(res));
 		return new String(res);
 	}
-	
-	//解码
+
+	// 解码
 	public static byte[] getOrigin(byte[] bytes) {
 		StringBuilder stringBuilder = new StringBuilder();
-		boolean flag=false;
-		for(int i=0;i<bytes.length;++i) {
-			flag=(i==bytes.length-1);
-			String str = byteToString(bytes[i],!flag);
-			//System.out.println(str);
+		boolean flag = false;
+		int j = 0;
+		for (; j < bytes.length - 1; ++j) {
+			String str = byteToString(bytes[j]);
+			// System.out.println(str);
 			stringBuilder.append(str);
 		}
+		// 最后一个字节转二进制字符串
+		int last = bytes[j];
+		String lastStr = Integer.toBinaryString(last);
+		if (stringBuilder.length() + lastStr.length() < zipContents.length()) {
+			while (stringBuilder.length() + lastStr.length() != zipContents.length()) {
+				stringBuilder.append("0");
+			}
+		}else if(stringBuilder.length() + lastStr.length() > zipContents.length()) {
+			if(last>0) {
+				last|=256;
+			}
+			lastStr = Integer.toBinaryString(last);
+			lastStr = lastStr.substring(lastStr.length()-8);
+		}
+		stringBuilder.append(lastStr);
 		//System.out.println(stringBuilder.toString());
-		
-		Map<String,Byte> map = new HashMap<>();
-		for(Map.Entry<Byte, String> entry:encodedMap.entrySet()) {
+
+		Map<String, Byte> map = new HashMap<>();
+		for (Map.Entry<Byte, String> entry : encodedMap.entrySet()) {
 			map.put(entry.getValue(), entry.getKey());
 		}
-		
+
 		List<Byte> list = new ArrayList<>();
-		for(int i=0;i<stringBuilder.length();) {
-			flag=true;
-			int count=1;
+		for (int i = 0; i < stringBuilder.length();) {
+			flag = true;
+			int count = 1;
 			Byte b = null;
-			
-			while(flag) {
-				String key = stringBuilder.substring(i, i+count);
-				b=map.get(key);
-				if(b==null) {
+
+			while (flag) {
+				String key = stringBuilder.substring(i, i + count);
+				b = map.get(key);
+				if (b == null) {
 					++count;
-				}else {
-					flag=false;
+				} else {
+					flag = false;
 				}
 			}
 			list.add(b);
-			i+=count;
+			i += count;
 		}
 		byte[] res = new byte[list.size()];
-		int count=0;
-		while(list.size()>0) {
-			res[count++]=list.remove(0);
+		int count = 0;
+		while (list.size() > 0) {
+			res[count++] = list.remove(0);
 		}
 		return res;
 	}
-	//字节转二进制字符串
-	public static String byteToString(byte b,boolean flag) {
+
+	// 字节转二进制字符串
+	public static String byteToString(byte b) {
 		int temp = b;
-		if(flag&&temp>0) {
-			temp|=256;
+		if (temp > 0) {
+			temp |= 256;
 		}
 		String str = Integer.toBinaryString(temp);
-		if(!flag) {
-			return str;
-		}else {
-			return str.substring(str.length()-8);
-		}
+		return str.substring(str.length() - 8);
+
 	}
-	
-	//编码
+
+	// 编码
 	public static byte[] encode(String arr) {
 		byte[] bytes = arr.getBytes();
-		//System.out.println(Arrays.toString(bytes));
-		List<Data> list = getDatas(bytes);		
+		// System.out.println(Arrays.toString(bytes));
+		List<Data> list = getDatas(bytes);
 		Data root = createHuffmanTree(list);
-		Map<Byte,String> map = getCodes(root);
-		bytes = getEncodedContent(bytes,map);
+		Map<Byte, String> map = getCodes(root);
+		bytes = getEncodedContent(bytes, map);
 		return bytes;
 	}
 
@@ -124,51 +140,62 @@ public class HuffmanCodingDemo {
 		}
 		return list.get(0);
 	}
-	
-	//字节串各个字符对应的赫夫曼编码
-	public static Map<Byte,String> encodedMap = new HashMap<>();
-	//获取赫夫曼树的所有子节点的赫夫曼码
-	public static Map<Byte,String> getCodes(Data root) {
-		if(root==null) {
+
+	// 字节串各个字符对应的赫夫曼编码
+	public static Map<Byte, String> encodedMap = new HashMap<>();
+
+	// 获取赫夫曼树的所有子节点的赫夫曼码
+	public static Map<Byte, String> getCodes(Data root) {
+		if (root == null) {
 			System.out.println("树为空");
 			return null;
 		}
 		StringBuilder path = new StringBuilder();
-		getCodes(root.left,path,"0");
-		getCodes(root.right,path,"1");
+		getCodes(root.left, path, "0");
+		getCodes(root.right, path, "1");
 		return encodedMap;
-	}	
+	}
+
 	public static void getCodes(Data data, StringBuilder path, String str) {
 		StringBuilder stringBuilder = new StringBuilder(path);
 		stringBuilder.append(str);
-		if(data !=null) {
-			if(data.data==null) {
-				getCodes(data.left,stringBuilder,"0");
-				getCodes(data.right,stringBuilder,"1");
-			}else {
+		if (data != null) {
+			if (data.data == null) {
+				getCodes(data.left, stringBuilder, "0");
+				getCodes(data.right, stringBuilder, "1");
+			} else {
 				encodedMap.put(data.data, stringBuilder.toString());
 			}
 		}
 	}
-	
-	public static byte[] getEncodedContent(byte[] content,Map<Byte,String> map) {
-		StringBuilder zipContent = new StringBuilder();
-		for(byte ele:content) {
-			zipContent.append(map.get(ele));
+
+	static StringBuilder zipContents = new StringBuilder();
+
+	public static byte[] getEncodedContent(byte[] content, Map<Byte, String> map) {
+		// StringBuilder zipContents = new StringBuilder();
+		for (byte ele : content) {
+			zipContents.append(map.get(ele));
 		}
-		//System.out.println(zipContent.length());
-		int len = (zipContent.length()+7)/8;
+		// System.out.println("压缩码: " + zipContent.toString());
+		// System.out.println(zipContent.length());
+		int len = (zipContents.length() + 7) / 8;
 		byte[] res = new byte[len];
-		for(int i=0,index=0;i<zipContent.length();i+=8) {
-			String str="";
-			if(i+8>zipContent.length()) {
-				str=zipContent.substring(i);
-			}else {
-				str=zipContent.substring(i,i+8);
+		for (int i = 0, index = 0; i < zipContents.length(); i += 8) {
+			String str = "";
+			if (i + 8 > zipContents.length()) {
+				str = zipContents.substring(i);
+			} else {
+				str = zipContents.substring(i, i + 8);
 			}
-			res[index++]= (byte) Integer.parseInt(str, 2);
+			res[index++] = (byte) Integer.parseInt(str, 2);
 		}
 		return res;
+	}
+
+	public static void printMap() {
+		for (Map.Entry<Byte, String> entry : encodedMap.entrySet()) {
+			System.out.println(entry.getKey() + " " + entry.getValue());
+		}
 	}
 }
 
@@ -192,7 +219,7 @@ class Data implements Comparable<Data> {
 			this.right.preOrder();
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Node [data=" + data + ", weight=" + weight + "]";
