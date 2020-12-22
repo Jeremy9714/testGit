@@ -169,6 +169,7 @@ class Node {
 				this.left.leftRotate();
 			}
 			rightRotate();
+			return;
 		}
 		if(rightHeight()-leftHeight()>1) {
 			if(this.right.leftHeight()>this.right.rightHeight()) {
