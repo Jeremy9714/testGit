@@ -16,7 +16,7 @@ public class PrimAlgorithm {
 		Graph graph = new Graph(vertices);
 		graph.vertices = data;
 		graph.edges = weight;
-		prim(graph, 5);
+		prim(graph, 4);
 	}
 
 	public static void prim(Graph graph, int start) {
