@@ -7,7 +7,7 @@ public class GreedyAlgorithmDemo {
 
 	public static void main(String[] args) {
 		// 存放所有的电台
-		HashMap<String, HashSet<String>> broadcasts = new HashMap<String, HashSet<String>>();
+		HashMap<String, HashSet<String>> boardcasts = new HashMap<String, HashSet<String>>();
 		// 存放每个电台覆盖的地区
 		HashSet<String> hashSet1 = new HashSet<String>();
 		hashSet1.add("北京");
@@ -27,12 +27,12 @@ public class GreedyAlgorithmDemo {
 		HashSet<String> hashSet5 = new HashSet<String>();
 		hashSet5.add("杭州");
 		hashSet5.add("大连");
-		broadcasts.put("K1", hashSet1);
-		broadcasts.put("K2", hashSet2);
-		broadcasts.put("K3", hashSet3);
-		broadcasts.put("K4", hashSet4);
-		broadcasts.put("K5", hashSet5);		
-		HashSet<String> selects = GreedyAlgorithm(broadcasts);
+		boardcasts.put("K1", hashSet1);
+		boardcasts.put("K2", hashSet2);
+		boardcasts.put("K3", hashSet3);
+		boardcasts.put("K4", hashSet4);
+		boardcasts.put("K5", hashSet5);		
+		HashSet<String> selects = GreedyAlgorithm(boardcasts);
 		System.out.println(selects);
 	}
 
