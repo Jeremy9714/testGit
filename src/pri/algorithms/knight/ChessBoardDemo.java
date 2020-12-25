@@ -14,8 +14,8 @@ public class ChessBoardDemo {
 	public static void main(String[] args) {
 		X = 8;
 		Y = 8;
-		int row = 1; //骑士的初始位置的行
-		int colum = 1; //骑士的初始位置的列
+		int row = 5; //骑士的初始位置的行
+		int colum = 5; //骑士的初始位置的列
 		int[][] chessBoard = new int[X][Y]; //初始化棋盘
 		isVisited = new boolean[X * Y]; //初始值都是false
 		System.out.println("骑士周游算法，开始运行");
